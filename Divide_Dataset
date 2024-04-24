@@ -1,0 +1,28 @@
+import os
+import random
+
+# 存放 yolo 要訓練的照片及txt檔案的資料夾 
+datasets = ['/Users/gigi/Desktop/PMA_dataset/'+ f for f in os.listdir('./PMA_dataset/') if  f.endswith('.jpg')]
+random.shuffle(datasets)
+
+
+len_dataset = int(len(datasets) * 0.7)
+random.shuffle(datasets)
+print('All data length',len(datasets))
+print(len_dataset) 
+print(len(datasets)-len_dataset)
+
+Traindataset= datasets[:len_dataset]
+ValidTestdataset= datasets[len_dataset:]
+len_datasetT = int(len(datasets) * 0.2) 
+Validdataset= ValidTestdataset[:len_datasetT] 
+Testdataset= ValidTestdataset[len_datasetT:] 
+
+with open('/home/JiggeNong182/train.txt', 'w') as f:
+    f.write('\n'.join(Traindataset))
+    
+with open('/home/JiggeNong182/valid.txt', 'w') as f:
+    f.write('\n'.join(Validdataset))
+
+with open('/home/JiggeNong182/test.txt', 'w') as f:
+    f.write('\n'.join(Testdataset))
